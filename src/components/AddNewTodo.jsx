@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import { Bell, CalendarDay, Clock, Palette, X } from "react-bootstrap-icons";
+import DatePicker from "react-datepicker";
+import TimePicker from "react-time-picker";
+import "react-time-picker/dist/TimePicker.css";
+import "react-clock/dist/Clock.css";
+import "react-datepicker/dist/react-datepicker.css";
 function AddNewTodo() {
   const [showModal, setShowModal] = useState(false);
   const [text, setText] = useState("");
@@ -35,7 +40,7 @@ function AddNewTodo() {
               <CalendarDay />
               <p>Choose a day</p>
             </div>
-            date-picker
+            <DatePicker selected={day} onChange={(day) => setDay(day)} />
           </div>
 
           <div className="pick-time">
@@ -43,7 +48,12 @@ function AddNewTodo() {
               <Clock />
               <p>Choose a time</p>
             </div>
-            Clock-picker
+            <DatePicker
+              selected={time}
+              onChange={(time) => setTime(time)}
+              showTimeSelect
+              dateFormat="Pp"
+            />
           </div>
 
           <div className="pick-project">
