@@ -1,6 +1,6 @@
 import React from "react";
 import User from "./User";
-import AddNewTool from "./AddNewTool";
+import AddNewTodo from "./AddNewTodo";
 import Calandar from "./Calandar";
 import Projects from "./Projects";
 
@@ -8,7 +8,7 @@ function SideBar() {
   return (
     <div className="sidebar">
       <User />
-      <AddNewTool />
+      <AddNewTodo />
       <Calandar />
       <Projects />
     </div>
