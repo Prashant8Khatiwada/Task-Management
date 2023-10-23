@@ -19,6 +19,7 @@
     "react-bootstrap-icons": "^1.10.3",
     "react-datepicker": "^4.21.0",
     "react-dom": "^18.2.0",
+    "react-ios-time-picker": "^0.2.2",
     "react-time-picker": "^6.5.2"
   },
   "devDependencies": {
