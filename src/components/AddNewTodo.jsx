@@ -2,22 +2,12 @@ import React, { useState } from "react";
 import Modal from "./Modal";
 import { Bell, CalendarDay, Clock, Palette, X } from "react-bootstrap-icons";
 import DatePicker from "react-datepicker";
-import { TimePicker } from "react-ios-time-picker";
 import "react-datepicker/dist/react-datepicker.css";
 function AddNewTodo() {
   const [showModal, setShowModal] = useState(false);
   const [text, setText] = useState("");
   const [day, setDay] = useState(new Date());
-
-  // Initialize time with the current time
-  const currentTime = new Date();
-  const currentHour = currentTime.getHours();
-  const currentMinute = currentTime.getMinutes();
-  const formattedHour = currentHour < 10 ? `0${currentHour}` : `${currentHour}`;
-  const formattedMinute =
-    currentMinute < 10 ? `0${currentMinute}` : `${currentMinute}`;
-  const initialTime = `${formattedHour}:${formattedMinute}`;
-  const [time, setTime] = useState(initialTime);
+  const [time, setTime] = useState(new Date());
 
   return (
     <div className="AddNewTodo">
@@ -46,7 +36,14 @@ function AddNewTodo() {
               <CalendarDay />
               <p>Choose a day</p>
             </div>
-            <DatePicker selected={day} onChange={(day) => setDay(day)} />
+            <DatePicker
+              selected={day}
+              onChange={(day) => setDay(day)}
+              peekNextMonth
+              showMonthDropdown
+              showYearDropdown
+              dropdownMode="select"
+            />
           </div>
 
           <div className="pick-time">
@@ -54,7 +51,15 @@ function AddNewTodo() {
               <Clock />
               <p>Choose a time</p>
             </div>
-            <TimePicker value={time} onChange={(time) => setTime(time)} />
+            <DatePicker
+              selected={time}
+              onChange={(time) => setStartDate(time)}
+              showTimeSelect
+              showTimeSelectOnly
+              timeIntervals={15}
+              timeCaption="Time"
+              dateFormat="h:mm aa"
+            />
           </div>
 
           <div className="pick-project">

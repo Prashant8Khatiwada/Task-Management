@@ -1,7 +1,7 @@
 import React from "react";
 import User from "./User";
 import AddNewTodo from "./AddNewTodo";
-import Calandar from "./Calandar";
+import Calendar from "./Calendar";
 import Projects from "./Projects";
 
 function SideBar() {
@@ -9,7 +9,7 @@ function SideBar() {
     <div className="sidebar">
       <User />
       <AddNewTodo />
-      <Calandar />
+      <Calendar />
       <Projects />
     </div>
   );
