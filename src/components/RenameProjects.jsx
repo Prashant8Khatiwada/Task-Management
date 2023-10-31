@@ -12,7 +12,7 @@ function RenameProjects({ project, setShowModel }) {
     <div className="RenameProject">
       <ProjectForm
         handleSubmit={handleSubmit}
-        heading="Edit Project"
+        heading="Edit Project Name!"
         value={newProjectName}
         setValue={setNewProjectName}
         setShowModel={setShowModel}
