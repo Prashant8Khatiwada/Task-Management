@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-function Todo() {
-  return <div>Todo</div>;
+function Todo({ todo }) {
+  return <div className="Todo">{todo.text}</div>;
 }
 
 export default Todo;
