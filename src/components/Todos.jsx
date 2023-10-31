@@ -2,7 +2,7 @@ import React from "react";
 import Todo from "./Todo";
 import Next7Days from "./Next7Days";
 function Todos() {
-  const selectedProject = "Next 7 Days";
+  const selectedProject = "today";
 
   const todos = [
     {
