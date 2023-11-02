@@ -4,6 +4,7 @@ function EditTodo() {
   const [text, setText] = useState("");
   const [day, setDay] = useState(new Date());
   const [time, setTime] = useState(new Date());
+  const [todoProject, setTodoProject] = useState();
   const projects = [
     { id: 1, name: "personal", numOfTodos: 0 },
     { id: 2, name: "work", numOfTodos: 1 },
@@ -24,6 +25,8 @@ function EditTodo() {
           setDay={setDay}
           time={time}
           setTime={setTime}
+          todoProject={todoProject}
+          setTodoProject={setTodoProject}
           projects={projects}
         />
       </div>

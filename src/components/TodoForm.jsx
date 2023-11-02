@@ -14,6 +14,8 @@ function TodoForm({
   projects,
   showButtons = false,
   setShowModal = false,
+  todoProject,
+  setTodoProject,
 }) {
   return (
     <form onSubmit={handleSubmit} className="TodoForm">
@@ -54,7 +56,7 @@ function TodoForm({
         </div>
         <DatePicker
           selected={time}
-          onChange={(time) => setStartDate(time)}
+          onChange={(time) => setTime(time)}
           showTimeSelect
           showTimeSelectOnly
           timeIntervals={15}
@@ -70,7 +72,13 @@ function TodoForm({
         </div>
         <div className="projects">
           {projects.map((project) => (
-            <div className="project" key={project.id}>
+            <div
+              className={`project ${
+                todoProject === project.name ? "active" : ""
+              }`}
+              onClick={() => setTodoProject(project.name)}
+              key={project.id}
+            >
               {project.name}
             </div>
           ))}

@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Modal from "./Modal";
 import "react-datepicker/dist/react-datepicker.css";
 import TodoForm from "./TodoForm";
+import { TodoContext } from "../context";
 function AddNewTodo() {
+  const { selectedProject } = useContext(TodoContext);
+
+  // STATE
   const [showModal, setShowModal] = useState(false);
   const [text, setText] = useState("");
   const [day, setDay] = useState(new Date());
   const [time, setTime] = useState(new Date());
+  const [todoProject, setTodoProject] = useState(selectedProject);
   const projects = [
     { id: 1, name: "personal", numOfTodos: 0 },
     { id: 2, name: "work", numOfTodos: 1 },
@@ -14,6 +19,11 @@ function AddNewTodo() {
   ];
 
   function handleSubmit(e) {}
+
+  useEffect(() => {
+    setTodoProject(selectedProject);
+  }, [selectedProject]);
+
   return (
     <div className="AddNewTodo">
       <div className="btn">
@@ -29,6 +39,8 @@ function AddNewTodo() {
           setDay={setDay}
           time={time}
           setTime={setTime}
+          todoProject={todoProject}
+          setTodoProject={setTodoProject}
           projects={projects}
           showButtons={true}
           setShowModal={setShowModal}
