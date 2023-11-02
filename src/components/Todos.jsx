@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Todo from "./Todo";
 import Next7Days from "./Next7Days";
+import { TodoContext } from "../context";
 function Todos() {
-  const selectedProject = "today";
+  const { selectedProject } = useContext(TodoContext);
 
   const todos = [
     {
@@ -26,6 +27,7 @@ function Todos() {
       project: "work",
     },
   ];
+
   return (
     <div className="Todos">
       <div className="selected-project">{selectedProject}</div>
