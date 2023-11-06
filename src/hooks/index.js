@@ -10,7 +10,7 @@ export function useTodos() {
       const data = response.docs.map((doc) => {
         return {
           id: doc.id,
-          data: doc.data(),
+          ...doc.data(),
         };
       });
 
@@ -24,7 +24,6 @@ export function useTodos() {
 
 export function useProjects(todos) {
   const [projects, setProjects] = useState([]);
-
   function calculateNumOfTodos(projectName, todos) {
     const numOfTodos = todos.filter((todo) => todo.projectName === projectName);
     return numOfTodos.length;

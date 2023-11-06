@@ -8,6 +8,7 @@ function TodoContextProvider({ children }) {
 
   const todos = useTodos();
   const projects = useProjects(todos);
+  console.log(projects);
   return (
     <TodoContext.Provider
       value={{
