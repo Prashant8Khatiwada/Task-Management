@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
-import firebase from "../firebase";
+import db from "../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export function useTodos() {
   const [todos, setTodos] = useState([]);
-
   useEffect(() => {
-    // console.log(firebase);
-    let unsubscribe = firebase.collection("todos").onSnapshot((snapshot) => {
-      const data = snapshot.docs.map((doc) => {
+    async function fetchData() {
+      let response = await getDocs(collection(db, "todos"));
+      const data = response.docs.map((doc) => {
         return {
           id: doc.id,
-          ...doc.data(),
+          data: doc.data(),
         };
       });
+
       setTodos(data);
-    });
-    return () => unsubscribe();
+    }
+    fetchData();
   }, []);
 
   return todos;
@@ -30,21 +31,21 @@ export function useProjects(todos) {
   }
 
   useEffect(() => {
-    let unsubscribe = firestore
-      .collection("projects")
-      .onSnapshot((snapshot) => {
-        const data = snapshot.docs.map((doc) => {
-          const projectName = doc.data().name;
-          return {
-            id: doc.id,
-            name: projectName,
-            numOfTodos: calculateNumOfTodos(projectName, todos),
-          };
-        });
-        setProjects(data);
+    async function getData() {
+      const response = await getDocs(collection(db, "projects"));
+      const data = response.docs.map((doc) => {
+        const projectName = doc.data().name;
+        return {
+          id: doc.id,
+          name: projectName,
+          numOfTodos: calculateNumOfTodos(projectName, todos),
+        };
       });
-    return () => unsubscribe();
-  }, []);
+      setProjects(data);
+    }
+
+    getData();
+  }, [todos]);
 
   return projects;
 }
