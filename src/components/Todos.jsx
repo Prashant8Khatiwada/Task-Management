@@ -9,8 +9,8 @@ function Todos() {
     <div className="Todos">
       <div className="selected-project">{selectedProject}</div>
       <div className="todos">
-        {selectedProject === "Next 7 Days" ? (
-          <Next7Days />
+        {selectedProject === "next 7 days" ? (
+          <Next7Days todos={todos} />
         ) : (
           todos.map((todo) => <Todo todo={todo} key={todo.id} />)
         )}
