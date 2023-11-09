@@ -21,10 +21,10 @@ function Todo({ todo }) {
 
       deleteDoc(todoRef)
         .then(() => {
-          toast.success("Document successfully deleted!");
+          toast.success("Todo successfully deleted!");
         })
         .catch((error) => {
-          toast.error("Error deleting document: ", error);
+          toast.error("Error deleting Todo: ", error);
         });
     }
   };

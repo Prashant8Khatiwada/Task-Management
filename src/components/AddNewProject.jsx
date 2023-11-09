@@ -25,7 +25,7 @@ function AddNewProject() {
               name: projectName,
             })
               .then(() => {
-                console.log("Project added successfully!");
+                toast.success("Project added successfully!");
               })
               .catch((error) => {
                 console.error("Error adding project: ", error);
