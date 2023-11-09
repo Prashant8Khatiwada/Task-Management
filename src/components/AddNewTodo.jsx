@@ -24,7 +24,7 @@ function AddNewTodo() {
       try {
         const docRef = addDoc(collection(db, "todos"), {
           text: text,
-          date: moment(day).format("MM/DD/YY"),
+          date: moment(day).format("MM/DD/YYYY"),
           day: moment(day).format("d"),
           time: moment(time).format("hh:mm a"),
           checked: false,
