@@ -1,12 +1,33 @@
 import React, { useState } from "react";
+import { doc, deleteDoc } from "firebase/firestore";
+import db from "../firebase";
+import { ToastContainer, toast } from "react-toastify";
 import {
   ArrowClockwise,
   CheckCircleFill,
   Circle,
   Trash,
 } from "react-bootstrap-icons";
+
 function Todo({ todo }) {
   const [hover, setHover] = useState(false);
+
+  const deleteTodo = (todo) => {
+    const isConfirmed = window.confirm(
+      "Are you sure you want to delete this todo?"
+    );
+    if (isConfirmed) {
+      const todoRef = doc(db, "todos", todo.id);
+
+      deleteDoc(todoRef)
+        .then(() => {
+          toast.success("Document successfully deleted!");
+        })
+        .catch((error) => {
+          toast.error("Error deleting document: ", error);
+        });
+    }
+  };
   return (
     <div className="Todo">
       <div
@@ -41,7 +62,7 @@ function Todo({ todo }) {
             </span>
           )}
         </div>
-        <div className="delete-todo">
+        <div className="delete-todo" onClick={() => deleteTodo(todo)}>
           {(todo.checked || hover) && (
             <span>
               <Trash />
@@ -49,6 +70,7 @@ function Todo({ todo }) {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
