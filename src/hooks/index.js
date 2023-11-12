@@ -57,7 +57,9 @@ export function useProjects(todos) {
   const [projects, setProjects] = useState([]);
 
   function calculateNumOfTodos(projectName, todos) {
-    const numOfTodos = todos.filter((todo) => todo.projectName === projectName);
+    const numOfTodos = todos.filter(
+      (todo) => todo.projectName === projectName && !todo.checked
+    );
     return numOfTodos.length;
   }
 
