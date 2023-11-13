@@ -5,7 +5,7 @@ const TodoContext = createContext();
 function TodoContextProvider({ children }) {
   const defaultProject = "today";
   const [selectedProject, setSelectedProject] = useState(defaultProject);
-
+  const [selectedTodo, setSelectedTodo] = useState(undefined);
   const todos = useTodos();
   const projects = useProjects(todos);
   const filteredTodos = useFilteredTodo(todos, selectedProject);
@@ -17,6 +17,8 @@ function TodoContextProvider({ children }) {
         defaultProject,
         todos: filteredTodos,
         projects,
+        selectedTodo,
+        setSelectedTodo,
       }}
     >
       {children}

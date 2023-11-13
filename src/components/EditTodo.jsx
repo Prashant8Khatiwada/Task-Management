@@ -1,35 +1,49 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import TodoForm from "./TodoForm";
+import { TodoContext } from "../context";
+import moment from "moment";
 function EditTodo() {
+  // STATE
   const [text, setText] = useState("");
   const [day, setDay] = useState(new Date());
   const [time, setTime] = useState(new Date());
   const [todoProject, setTodoProject] = useState();
-  const projects = [
-    { id: 1, name: "personal", numOfTodos: 0 },
-    { id: 2, name: "work", numOfTodos: 1 },
-    { id: 3, name: "other", numOfTodos: 2 },
-  ];
+
+  // CONTEXT
+  const { selectedTodo, projects } = useContext(TodoContext);
+
+  useEffect(() => {
+    if (selectedTodo) {
+      setText(selectedTodo.text);
+      setDay(moment(selectedTodo.date, "MM/DD/YYYY"));
+      // setTime(moment(selectedTodo.time, "hh:mm A"));
+      setTodoProject(selectedTodo.projectName);
+    }
+  }, [selectedTodo]);
 
   function handleSubmit(e) {}
 
   return (
-    <div className="EditTodo">
-      <div className="header">Edit Todo</div>
-      <div className="container">
-        <TodoForm
-          handleSubmit={handleSubmit}
-          text={text}
-          setText={setText}
-          day={day}
-          setDay={setDay}
-          time={time}
-          setTime={setTime}
-          todoProject={todoProject}
-          setTodoProject={setTodoProject}
-          projects={projects}
-        />
-      </div>
+    <div>
+      {selectedTodo && (
+        <div className="EditTodo">
+          <div className="header">Edit Todo</div>
+          <div className="container">
+            <TodoForm
+              handleSubmit={handleSubmit}
+              text={text}
+              setText={setText}
+              day={day}
+              setDay={setDay}
+              time={time}
+              setTime={setTime}
+              todoProject={todoProject}
+              setTodoProject={setTodoProject}
+              projects={projects}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

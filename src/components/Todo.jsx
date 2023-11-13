@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import { doc, addDoc, updateDoc, collection } from "firebase/firestore";
-import db from "../firebase";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState, useContext } from "react";
 import {
   ArrowClockwise,
   CheckCircleFill,
@@ -9,11 +6,33 @@ import {
   Trash,
 } from "react-bootstrap-icons";
 import moment from "moment";
+import {
+  doc,
+  addDoc,
+  updateDoc,
+  collection,
+  deleteDoc,
+} from "firebase/firestore";
+import db from "../firebase";
+import { TodoContext } from "../context";
+import { ToastContainer, toast } from "react-toastify";
 
 function Todo({ todo }) {
+  // STATE
   const [hover, setHover] = useState(false);
 
-  // Delete Todo
+  // CONTEXT
+  const { selectedTodo, setSelectedTodo } = useContext(TodoContext);
+
+  //========== Delete Todo ==========
+
+  const handleDelete = (todo) => {
+    deleteTodo(todo);
+    if (selectedTodo === todo) {
+      setSelectedTodo(undefined);
+    }
+  };
+
   const deleteTodo = (todo) => {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this todo?"
@@ -31,7 +50,7 @@ function Todo({ todo }) {
     }
   };
 
-  // Check Todo
+  // ========== Check Todo ==========
   const checkTodo = (todo) => {
     const todoRef = doc(db, "todos", todo.id);
 
@@ -80,7 +99,7 @@ function Todo({ todo }) {
             </span>
           )}
         </div>
-        <div className="text">
+        <div className="text" onClick={() => setSelectedTodo(todo)}>
           <p style={{ color: todo.checked ? "#bebebe" : "#000000" }}>
             {todo.text}
           </p>
@@ -96,7 +115,7 @@ function Todo({ todo }) {
             </span>
           )}
         </div>
-        <div className="delete-todo" onClick={() => deleteTodo(todo)}>
+        <div className="delete-todo" onClick={() => handleDelete(todo)}>
           {(todo.checked || hover) && (
             <span>
               <Trash />
