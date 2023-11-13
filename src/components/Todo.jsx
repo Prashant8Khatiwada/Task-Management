@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, addDoc, updateDoc, collection } from "firebase/firestore";
 import db from "../firebase";
 import { ToastContainer, toast } from "react-toastify";
 import {
@@ -38,28 +38,30 @@ function Todo({ todo }) {
     updateDoc(todoRef, { checked: !todo.checked });
   };
 
-  // For Repeating Todo For Next Day
-  const repeatNextDay = (todo) => {
+  // To Repead Todo For Next Day
+  const repeatNextDay = async (todo) => {
     const nextDayDate = moment(todo.date, "MM/DD/YYYY").add(1, "days");
+
+    // Create a new object with the updated date and day
     const repeatedTodo = {
       ...todo,
       checked: false,
       date: nextDayDate.format("MM/DD/YYYY"),
       day: nextDayDate.format("d"),
     };
-    const addTodo = async (repeatedTodo) => {
-      // Remove the 'id' property
-      const { id, ...todoWithoutId } = repeatedTodo;
 
-      try {
-        // Add the document to the 'todos' collection
-        const docRef = await addDoc(collection(db, "todos"), todoWithoutId);
-        console.log("Document written with ID: ", docRef.id);
-      } catch (error) {
-        console.error("Error adding document: ", error);
-      }
-    };
+    // Remove the 'id' property
+    const { id, ...todoWithoutId } = repeatedTodo;
+
+    try {
+      // Add the repeated todo to the 'todos' collection
+      const docRef = await addDoc(collection(db, "todos"), todoWithoutId);
+      console.log("Repeated Todo added with ID: ", docRef.id);
+    } catch (error) {
+      console.error("Error adding repeated todo: ", error);
+    }
   };
+
   return (
     <div className="Todo">
       <div
