@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import RenameProjects from "./RenameProjects";
 import { Pencil, XCircle } from "react-bootstrap-icons";
 import Modal from "./Modal";
+import { useTransition, animated } from "@react-spring/web";
 import { TodoContext } from "../context";
 import db from "../firebase";
 import {
@@ -21,6 +22,7 @@ function Project({ project, edit }) {
   // STATE
   const [showModal, setShowModel] = useState(false);
 
+  // TO DELETE PROJECT
   const deleteProject = async (project) => {
     const isConfirmed = window.confirm(
       "Are you sure you want to delete this project?"
@@ -39,9 +41,7 @@ function Project({ project, edit }) {
           collection(db, "todos"),
           where("projectName", "==", project.name)
         );
-        console.log(todosQuery);
         const todosSnapshot = await getDocs(todosQuery);
-        console.log(todosSnapshot);
         todosSnapshot.forEach(async (todoDoc) => {
           await deleteDoc(todoDoc.ref);
         });
@@ -50,12 +50,18 @@ function Project({ project, edit }) {
         if (selectedProject === project.name) {
           setSelectedProject(defaultProject);
         }
-        toast.success("Project successfully deleted!");
       } catch (error) {
         toast.error("Error deleting project: ", error);
       }
     }
   };
+
+  // FOR ANIMATION
+  const btnTransation = useTransition(edit, {
+    from: { opacity: 0, right: "-20px" },
+    enter: { opacity: 1, right: "0px" },
+    leave: { opacity: 0, right: "-20px" },
+  });
 
   return (
     <div className="Project">
@@ -63,20 +69,24 @@ function Project({ project, edit }) {
         {project.name}
       </div>
       <div className="btns">
-        {edit ? (
-          <div className="edit-delete">
-            <span onClick={() => setShowModel(true)} className="edit">
-              <Pencil size="13" />
-            </span>
+        {btnTransation((props, items) =>
+          items ? (
+            <animated.div className="edit-delete" style={props}>
+              <span onClick={() => setShowModel(true)} className="edit">
+                <Pencil size="13" />
+              </span>
 
-            <span className="delete" onClick={() => deleteProject(project)}>
-              <XCircle size="13" />
-            </span>
-          </div>
-        ) : project.numOfTodos === 0 ? (
-          ""
-        ) : (
-          <div className="total-todos">{project.numOfTodos}</div>
+              <span className="delete" onClick={() => deleteProject(project)}>
+                <XCircle size="13" />
+              </span>
+            </animated.div>
+          ) : project.numOfTodos === 0 ? (
+            ""
+          ) : (
+            <animated.div className="total-todos" style={props}>
+              {project.numOfTodos}
+            </animated.div>
+          )
         )}
       </div>
       <Modal showModal={showModal} setShowModal={setShowModel}>
