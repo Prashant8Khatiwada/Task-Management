@@ -28,7 +28,7 @@ function AddNewTodo() {
           day: moment(day).format("d"),
           time: moment(time).format("hh:mm a"),
           checked: false,
-          color: randomColor(),
+          color: randomColor({ luminosity: "dark" }),
           projectName: todoProject,
         });
       } catch (error) {

@@ -452,6 +452,14 @@
 .Todo .todo-container {
     display: flex;
     align-items: center;
+
+}
+
+.Todo .todo-container .check-todo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
 }
 
 .Todo .todo-container span {

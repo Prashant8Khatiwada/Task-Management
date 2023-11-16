@@ -16,6 +16,7 @@ import {
 import db from "../firebase";
 import { TodoContext } from "../context";
 import { ToastContainer, toast } from "react-toastify";
+import { useTransition, animated, useSpring } from "@react-spring/web";
 
 function Todo({ todo }) {
   // STATE
@@ -81,22 +82,35 @@ function Todo({ todo }) {
     }
   };
 
+  // FOR ANIMATION
+  const fadeIn = useSpring({
+    from: { marginTop: "-12px", opacity: 0 },
+    to: { marginTop: "0px", opacity: 1 },
+  });
+
+  const checkTransation = useTransition(todo.checked, {
+    from: { position: "absolute", transform: "scale(0)" },
+    enter: { transform: "scale(1)" },
+    leave: { transform: "scale(0)" },
+  });
   return (
-    <div className="Todo">
+    <animated.div style={fadeIn} className="Todo">
       <div
         className="todo-container"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
         <div className="check-todo" onClick={() => checkTodo(todo)}>
-          {todo.checked ? (
-            <span className="checked">
-              <CheckCircleFill color="#bebebe" />
-            </span>
-          ) : (
-            <span className="unchecked">
-              <Circle color={todo.color} />
-            </span>
+          {checkTransation((props, checked) =>
+            checked ? (
+              <animated.span style={props} className="checked">
+                <CheckCircleFill color="#bebebe" />
+              </animated.span>
+            ) : (
+              <animated.span style={props} className="unchecked">
+                <Circle color={todo.color} />
+              </animated.span>
+            )
           )}
         </div>
         <div className="text" onClick={() => setSelectedTodo(todo)}>
@@ -124,7 +138,7 @@ function Todo({ todo }) {
         </div>
       </div>
       <ToastContainer />
-    </div>
+    </animated.div>
   );
 }
 

@@ -3,7 +3,7 @@ import React, { useContext, useState } from "react";
 import RenameProjects from "./RenameProjects";
 import { Pencil, XCircle } from "react-bootstrap-icons";
 import Modal from "./Modal";
-import { useTransition, animated } from "@react-spring/web";
+import { useTransition, animated, useSpring } from "@react-spring/web";
 import { TodoContext } from "../context";
 import db from "../firebase";
 import {
@@ -57,6 +57,11 @@ function Project({ project, edit }) {
   };
 
   // FOR ANIMATION
+  const fadeIn = useSpring({
+    from: { marginTop: "-12px", opacity: 0 },
+    to: { marginTop: "0px", opacity: 1 },
+  });
+
   const btnTransation = useTransition(edit, {
     from: { opacity: 0, right: "-20px" },
     enter: { opacity: 1, right: "0px" },
@@ -64,7 +69,7 @@ function Project({ project, edit }) {
   });
 
   return (
-    <div className="Project">
+    <animated.div style={fadeIn} className="Project">
       <div className="name" onClick={() => setSelectedProject(project.name)}>
         {project.name}
       </div>
@@ -92,7 +97,7 @@ function Project({ project, edit }) {
       <Modal showModal={showModal} setShowModal={setShowModel}>
         <RenameProjects project={project} setShowModel={setShowModel} />
       </Modal>
-    </div>
+    </animated.div>
   );
 }
 
