@@ -44,6 +44,7 @@
 
 .User .logo img {
     width: 50px;
+    cursor: pointer;
 }
 
 .User .info p {
@@ -418,12 +419,13 @@
 /* Todos  */
 
 .Todos {
-    width: 45%;
+    width: 40%;
     height: 80%;
     background-color: white;
     position: absolute;
-    bottom: 4px;
-    left: 40px;
+    bottom: 1rem;
+    left: 2.5%;
+    text-wrap: balance;
     border-radius: 4px;
     opacity: 0.9;
     padding: 0 0.5rem 0.5rem 0.5rem;
@@ -508,13 +510,14 @@
 
 .EditTodo {
     position: absolute;
-    bottom: 4px;
-    left: calc(80px + 500px + 80px);
+    bottom: 1rem;
+    left: calc(40% + 2.5% + 2.5%);
     background-color: white;
     height: 80%;
     width: 450px;
     border-radius: 4px;
     opacity: 0.9;
+    text-wrap: balance;
 }
 
 .EditTodo .header {
